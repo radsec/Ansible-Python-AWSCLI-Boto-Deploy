@@ -99,14 +99,14 @@
   ignore_errors: yes  
   become: yes
   when:
-    - auto_install_latest or (install_python3_only and not install_python2_only)
+    - auto_install_latest or (install_python3_only and not install_python2_only) or install_boto
 
 - name: "Install Python 3 - boto, boto3, and botocore via pip | --user --upgrade | Red Hat 6 or CentOS 6 Distros"
   shell: "pip3 install --user --upgrade boto boto3 botocore"
   ignore_errors: yes  
   become: yes
   when:
-    - auto_install_latest or (install_python3_only and not install_python2_only)
+    - auto_install_latest or (install_python3_only and not install_python2_only) or install_boto
 
 # Python2
 - name: "Install Python 2 | Red Hat 6 or CentOS 6 Distros"
@@ -132,11 +132,24 @@
   ignore_errors: yes  
   become: yes
   when:
-    - auto_install_latest or (install_python2_only and not install_python3_only)
+    - auto_install_latest or (install_python2_only and not install_python3_only) or install_boto
 
 - name: "Install Python 2 - boto, boto3, and botocore via pip | --user --upgrade | Red Hat 6 or CentOS 6 Distros"
   shell: "pip install --user --upgrade boto boto3 botocore"
   ignore_errors: yes  
   become: yes
   when:
-    - auto_install_latest or (install_python2_only and not install_python3_only)
+    - auto_install_latest or (install_python2_only and not install_python3_only) or install_boto
+
+- name: "Install AWSCLI - bundled installer | Red Hat 6 or CentOS 6 Distros"
+  shell: "{{ item }}"
+  args:
+    chdir: "/tmp/"
+  become: yes
+  ignore_errors: yes
+  with_items:
+    - "curl \"https://s3.amazonaws.com/aws-cli/awscli-bundle.zip\" -o \"awscli-bundle.zip\""   
+    - "unzip awscli-bundle.zip"
+    - "sudo ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws"
+  when:
+    - auto_install_latest or install_python2_only or install_python3_only or install_awscli

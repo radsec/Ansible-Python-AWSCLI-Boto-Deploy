@@ -197,7 +197,7 @@
   ignore_errors: yes
   become: yes
   when:
-    - auto_install_latest or (install_python2_only and not install_python3_only)
+    - auto_install_latest or (install_python2_only and not install_python3_only) or install_boto
     - "python27.rc == 0"
 
 - name: "Install Python26 | Amazon Linux 1 Distro"
@@ -229,5 +229,18 @@
   ignore_errors: yes
   become: yes
   when:
-    - auto_install_latest or (install_python2_only and not install_python3_only)
+    - auto_install_latest or (install_python2_only and not install_python3_only) or install_boto
     - "python27.rc != 0"
+
+- name: "Install AWSCLI - bundled installer | Amazon Linux 1 Distro"
+  shell: "{{ item }}"
+  args:
+    chdir: "/tmp/"
+  become: yes
+  ignore_errors: yes
+  with_items:
+    - "curl \"https://s3.amazonaws.com/aws-cli/awscli-bundle.zip\" -o \"awscli-bundle.zip\""   
+    - "unzip awscli-bundle.zip"
+    - "sudo ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws"
+  when:
+    - auto_install_latest or install_python2_only or install_python3_only or install_awscli

@@ -16,6 +16,8 @@ role: Ansible-Python-AWSCLI-Boto-Deploy
 auto_install_latest: true
 install_python2_only: false
 install_python3_only: false
+install_boto: true
+install_awscli: true
 ```
 ## License
 This Source Code Form is subject to the terms of the Mozilla Public

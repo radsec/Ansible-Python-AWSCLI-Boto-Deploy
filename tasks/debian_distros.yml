@@ -26,7 +26,7 @@
   ignore_errors: yes
   register: python3_boto
   when:
-    - auto_install_latest or (install_python3_only and not install_python2_only)
+    - auto_install_latest or (install_python3_only and not install_python2_only) or install_boto
 
 # Python2
 - name: "Install Python2 | Debian or Ubuntu Distros"
@@ -43,4 +43,17 @@
   ignore_errors: yes
   register: python2_boto
   when:
-    - auto_install_latest or (install_python3_only and not install_python2_only)
+    - auto_install_latest or (install_python3_only and not install_python2_only) or install_boto
+
+- name: "Install AWSCLI - bundled installer | Debian or Ubuntu Distros"
+  shell: "{{ item }}"
+  args:
+    chdir: "/tmp/"
+  become: yes
+  ignore_errors: yes
+  with_items:
+    - "curl \"https://s3.amazonaws.com/aws-cli/awscli-bundle.zip\" -o \"awscli-bundle.zip\""   
+    - "unzip awscli-bundle.zip"
+    - "sudo ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws"
+  when:
+    - auto_install_latest or install_python2_only or install_python3_only or install_awscli
