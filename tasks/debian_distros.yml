@@ -20,6 +20,14 @@
   when:
     - auto_install_latest or (install_python3_only and not install_python2_only)
 
+- name: "Install Python3 - boto, botocore, boto3 | Debian or Ubuntu Distros"
+  shell: "apt-get install -y python3-boto python3-botocore python3-boto3"
+  become: yes
+  ignore_errors: yes
+  register: python3_boto
+  when:
+    - auto_install_latest or (install_python3_only and not install_python2_only)
+
 # Python2
 - name: "Install Python2 | Debian or Ubuntu Distros"
   shell: "apt-get install -y python python-pip python-virtualenv"
@@ -28,3 +36,11 @@
   register: python2
   when:
     - auto_install_latest or (install_python2_only and not install_python3_only)
+
+- name: "Install Python2 - boto, botocore, boto3 | Debian or Ubuntu Distros"
+  shell: "apt-get install -y python-boto python-botocore python-boto3"
+  become: yes
+  ignore_errors: yes
+  register: python2_boto
+  when:
+    - auto_install_latest or (install_python3_only and not install_python2_only)
