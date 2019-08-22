@@ -184,6 +184,22 @@
   when:
     - auto_install_latest or (install_python2_only and not install_python3_only)
 
+- name: "Install Python27 - boto, boto3, and botocore | Amazon Linux 1 Distro"
+  yum:
+    name: "{{ packages }}"
+    state: latest
+  vars:
+    packages:
+    - python27-boto
+    - python27-boto3
+    - python27-botocore
+  register: python27_boto
+  ignore_errors: yes
+  become: yes
+  when:
+    - auto_install_latest or (install_python2_only and not install_python3_only)
+    - "python27.rc == 0"
+
 - name: "Install Python26 | Amazon Linux 1 Distro"
   yum:
     name: "{{ packages }}"
@@ -201,12 +217,18 @@
     - auto_install_latest or install_python2_only
     - "python27.rc != 0"
 
-- name: "Install python-boto | Amazon Linux 1 Distro"
+- name: "Install Python26 - boto, boto3, and botocore | Amazon Linux 1 Distro"
   yum:
-    name: "python-boto"
+    name: "{{ packages }}"
+    state: latest
+  vars:
+    packages:
+    - python26-boto
+    - python26-boto3
+    - python26-botocore
+  register: python26_boto
+  ignore_errors: yes
   become: yes
   when:
-    - auto_install_latest or install_python2_only
-
-- name: "Install boto3 | Amazon Linux 1 Distro"
-  pip
+    - auto_install_latest or (install_python2_only and not install_python3_only)
+    - "python27.rc != 0"
