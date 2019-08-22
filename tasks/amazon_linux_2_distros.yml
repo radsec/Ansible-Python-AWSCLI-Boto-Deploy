@@ -83,4 +83,3 @@
   become: yes
   when:
     - auto_install_latest or (install_python2_only and not install_python3_only)
-    - "python2.rc == 0"
