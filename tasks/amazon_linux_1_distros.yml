@@ -215,7 +215,6 @@
   become: yes
   when:
     - auto_install_latest or install_python2_only
-    - "python27.rc != 0"
 
 - name: "Install Python26 - boto, boto3, and botocore | Amazon Linux 1 Distro"
   yum:

@@ -38,6 +38,20 @@
   when:
     - auto_install_latest or (install_python3_only and not install_python2_only)
 
+- name: "Python 3 - boto - pip --user | Amazon Linux 2 Distro"
+  shell: "pip3 install --upgrade boto"
+  become: yes
+  ignore_errors: yes
+  when:
+    - auto_install_latest or (install_python3_only and not install_python2_only)
+
+- name: "Python 3 - boto - pip --user | Amazon Linux 2 Distro"
+  shell: "pip3 install --user --upgrade boto"
+  become: yes
+  ignore_errors: yes
+  when:
+    - auto_install_latest or (install_python3_only and not install_python2_only)
+
 # Python2
 - name: "Install Python2 | Amazon Linux 2 Distro"
   yum:
@@ -55,3 +69,18 @@
   become: yes
   when:
     - auto_install_latest or (install_python2_only and not install_python3_only)
+
+- name: "Install Python2 - botocore and boto3 | Amazon Linux 2 Distro"
+  yum:
+    name: "{{ packages }}"
+    state: latest
+  vars:
+    packages:
+    - python2-botocore
+    - python2-boto3
+  register: python2_boto
+  ignore_errors: yes
+  become: yes
+  when:
+    - auto_install_latest or (install_python2_only and not install_python3_only)
+    - "python2.rc == 0"
