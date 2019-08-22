@@ -8,7 +8,7 @@
 # Debian or Ubuntu Distros
 
 - name: "Update apt repo list | Debian or Ubuntu Distros"
-  shell: apt-get update
+  shell: "apt-get update"
   become: yes
 
 # Python3
@@ -20,25 +20,11 @@
   when:
     - auto_install_latest or (install_python3_only and not install_python2_only)
 
-- name: "Install Python3 - boto and boto3 | Debian or Ubuntu Distros"
-  shell: "apt-get install -y python3-boto python-boto3"
-  become: yes
-  ignore_errors: yes
-  when:
-    - auto_install_latest or (install_python3_only and not install_python2_only)
-
 # Python2
 - name: "Install Python2 | Debian or Ubuntu Distros"
-  shell: apt-get install -y python python-pip python-virtualenv
+  shell: "apt-get install -y python python-pip python-virtualenv"
   become: yes
   ignore_errors: yes
   register: python2
   when:
     - auto_install_latest or (install_python2_only and not install_python3_only)
-
-- name: "Install Python2 - boto | Debian or Ubuntu Distros"
-  shell: "apt-get install -y python-boto"
-  become: yes
-  ignore_errors: yes
-  when:
-    - auto_install_latest or (install_python3_only and not install_python2_only)

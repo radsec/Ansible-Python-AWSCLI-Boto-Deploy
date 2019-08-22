@@ -18,13 +18,7 @@
     - ansible_facts['os_family']|lower == 'redhat' or ansible_facts['distribution']|lower == 'red hat enterprise linux' or ansible_facts['distribution']|lower == 'red hat'
 
 - name: "Ensure rhui-REGION-rhel-server-extras and -optional are enabled | Red Hat 6 Distros"
-  yum_repository:
-    name: "{{ repos }}"
-    enabled: yes
-  vars:
-    repos:
-      - rhui-REGION-rhel-server-extras
-      - rhui-REGION-rhel-server-optional
+  shell: "yum-config-manager --enable rhui-REGION-rhel-server-extras && yum-config-manager --enable rhui-REGION-rhel-server-optional"
   become: yes
   when:
     - not ansible_facts['distribution']|lower == 'centos'
@@ -64,41 +58,46 @@
     - auto_install_latest or (install_python3_only and not install_python2_only)
 
 - name: "Install Python 3 - pip | Red Hat 6 or CentOS 6 Distros"
-  shell: python3 easy_install.py pip
+  shell: "python3 easy_install.py pip"
   args:
     chdir: /usr/lib/python3.4/sites-packages/
+  ignore_errors: yes
   become: yes
   when:
     - auto_install_latest or (install_python3_only and not install_python2_only)
 
 - name: "Upgrade Python 3 - pip | Red Hat 6 or CentOS 6 Distros"
-  shell: pip3 install --upgrade pip
+  shell: "pip3 install --upgrade pip"
   args:
     chdir: /usr/lib/python3.4/sites-packages/
+  ignore_errors: yes  
   become: yes
   when:
     - auto_install_latest or (install_python3_only and not install_python2_only)
 
 - name: "Upgrade Python 3 - pip --user | Red Hat 6 or CentOS 6 Distros"
-  shell: pip3 install --user --upgrade pip
+  shell: "pip3 install --user --upgrade pip"
   args:
     chdir: /usr/lib/python3.4/sites-packages/
+  ignore_errors: yes  
   become: yes
   when:
     - auto_install_latest or (install_python3_only and not install_python2_only)
 
 - name: "Python 3 - virtualenv - pip --user | Red Hat 6 or CentOS 6 Distros"
-  shell: pip3 install --upgrade virtualenv
+  shell: "pip3 install --upgrade virtualenv"
   args:
     chdir: /usr/lib/python3.4/sites-packages/
+  ignore_errors: yes  
   become: yes
   when:
     - auto_install_latest or (install_python3_only and not install_python2_only)
 
 - name: "Python 3 - virtualenv - pip --user | Red Hat 6 or CentOS 6 Distros"
-  shell: pip3 install --user --upgrade virtualenv
+  shell: "pip3 install --user --upgrade virtualenv"
   args:
     chdir: /usr/lib/python3.4/sites-packages/
+  ignore_errors: yes  
   become: yes
   when:
     - auto_install_latest or (install_python3_only and not install_python2_only)

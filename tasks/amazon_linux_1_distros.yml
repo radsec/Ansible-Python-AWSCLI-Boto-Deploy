@@ -200,3 +200,13 @@
   when:
     - auto_install_latest or install_python2_only
     - "python27.rc != 0"
+
+- name: "Install python-boto | Amazon Linux 1 Distro"
+  yum:
+    name: "python-boto"
+  become: yes
+  when:
+    - auto_install_latest or install_python2_only
+
+- name: "Install boto3 | Amazon Linux 1 Distro"
+  pip
