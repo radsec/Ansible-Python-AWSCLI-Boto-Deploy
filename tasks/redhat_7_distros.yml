@@ -90,6 +90,20 @@
     - "python37_virtualenv.rc != 0"
     - "python36_virtualenv.rc != 0"
 
+- name: "Install Python 3 - boto, botocore, and boto3 - pip --user | Red Hat 7 or CentOS 7 Distros"
+  shell: "pip3 install --upgrade boto boto3 botocore"
+  become: yes
+  ignore_errors: yes
+  when:
+    - auto_install_latest or (install_python3_only and not install_python2_only)
+
+- name: "Python 3 - boto - pip --user | Red Hat 7 or CentOS 7 Distros"
+  shell: "pip3 install --user --upgrade boto boto3 botocore"
+  become: yes
+  ignore_errors: yes
+  when:
+    - auto_install_latest or (install_python3_only and not install_python2_only)
+
 # Python2
 - name: "Install Python 2 | Red Hat 7 or CentOS 7 Distros"
   yum:
@@ -104,5 +118,19 @@
   register: python2
   ignore_errors: yes
   become: yes
+  when:
+    - auto_install_latest or (install_python2_only and not install_python3_only)
+
+- name: "Install Python 2 - boto, botocore, and boto3 via pip | --upgrade | Red Hat 7 or CentOS 7 Distros"
+  shell: "pip install --upgrade boto boto3 botocore"
+  become: yes
+  ignore_errors: yes
+  when:
+    - auto_install_latest or (install_python2_only and not install_python3_only)
+
+- name: "Install Python 2 - boto, boto3, and botocore via pip | --user --upgrade | Red Hat 7 or CentOS 7 Distros"
+  shell: "pip install --user --upgrade boto boto3 botocore"
+  become: yes
+  ignore_errors: yes
   when:
     - auto_install_latest or (install_python2_only and not install_python3_only)
