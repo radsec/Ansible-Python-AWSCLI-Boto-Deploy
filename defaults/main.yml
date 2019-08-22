@@ -1,11 +1,11 @@
 ---
 ## START COPYRIGHT NOTICE ##
-# Ansible-Python-Deploy-Role
+# Ansible-Python-AWSCLI-Boto-Deploy-Role
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 ## END COPYRIGHT NOTICE ##
-# defaults file for Ansible-Python-Deploy-Role
+# defaults file for Ansible-Python-AWSCLI-Boto-Deploy-Role
 
 # Define what sections to run
 
