@@ -68,8 +68,6 @@
 
 - name: "Upgrade Python 3 pip | --upgrade | Red Hat 6 or CentOS 6 Distros"
   shell: "pip3 install --upgrade pip"
-  args:
-    chdir: /usr/lib/python3.4/sites-packages/
   ignore_errors: yes  
   become: yes
   when:
@@ -77,8 +75,6 @@
 
 - name: "Upgrade Python 3 pip | --user --upgrade | Red Hat 6 or CentOS 6 Distros"
   shell: "pip3 install --user --upgrade pip"
-  args:
-    chdir: /usr/lib/python3.4/sites-packages/
   ignore_errors: yes  
   become: yes
   when:
@@ -86,8 +82,6 @@
 
 - name: "Install Python 3 - virtualenv via pip | --upgrade | Red Hat 6 or CentOS 6 Distros"
   shell: "pip3 install --upgrade virtualenv"
-  args:
-    chdir: /usr/lib/python3.4/sites-packages/
   ignore_errors: yes  
   become: yes
   when:
@@ -95,8 +89,20 @@
 
 - name: "Install Python 3 - virtualenv via pip | --user --upgrade | Red Hat 6 or CentOS 6 Distros"
   shell: "pip3 install --user --upgrade virtualenv"
-  args:
-    chdir: /usr/lib/python3.4/sites-packages/
+  ignore_errors: yes  
+  become: yes
+  when:
+    - auto_install_latest or (install_python3_only and not install_python2_only)
+
+- name: "Install Python 3 - boto, boto3, and botocore via pip | --upgrade | Red Hat 6 or CentOS 6 Distros"
+  shell: "pip3 install --upgrade boto boto3 botocore"
+  ignore_errors: yes  
+  become: yes
+  when:
+    - auto_install_latest or (install_python3_only and not install_python2_only)
+
+- name: "Install Python 3 - boto, boto3, and botocore via pip | --user --upgrade | Red Hat 6 or CentOS 6 Distros"
+  shell: "pip3 install --user --upgrade boto boto3 botocore"
   ignore_errors: yes  
   become: yes
   when:
@@ -117,6 +123,20 @@
     - python-devel
   register: python2
   ignore_errors: yes
+  become: yes
+  when:
+    - auto_install_latest or (install_python2_only and not install_python3_only)
+
+- name: "Install Python 2 - boto, boto3, and botocore via pip | --upgrade | Red Hat 6 or CentOS 6 Distros"
+  shell: "pip install --upgrade boto boto3 botocore"
+  ignore_errors: yes  
+  become: yes
+  when:
+    - auto_install_latest or (install_python2_only and not install_python3_only)
+
+- name: "Install Python 2 - boto, boto3, and botocore via pip | --user --upgrade | Red Hat 6 or CentOS 6 Distros"
+  shell: "pip install --user --upgrade boto boto3 botocore"
+  ignore_errors: yes  
   become: yes
   when:
     - auto_install_latest or (install_python2_only and not install_python3_only)

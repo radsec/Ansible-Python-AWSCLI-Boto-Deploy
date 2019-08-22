@@ -38,7 +38,7 @@
   when:
     - auto_install_latest or (install_python3_only and not install_python2_only)
 
-- name: "Python 3 - boto, boto3, botocore via pip | --upgrade | Amazon Linux 2 Distro"
+- name: "Install Python 3 - boto, boto3, botocore via pip | --upgrade | Amazon Linux 2 Distro"
   shell: "pip3 install --upgrade boto"
   become: yes
   ignore_errors: yes
@@ -81,5 +81,19 @@
   register: python2_boto
   ignore_errors: yes
   become: yes
+  when:
+    - auto_install_latest or (install_python2_only and not install_python3_only)
+
+- name: "Install Python 2 - boto, boto3, botocore via pip | --upgrade | Amazon Linux 2 Distro"
+  shell: "pip install --upgrade boto boto3 botocore"
+  become: yes
+  ignore_errors: yes
+  when:
+    - auto_install_latest or (install_python2_only and not install_python3_only)
+
+- name: "Install Python 2 - boto, boto3, botocore via pip | --user --upgrade | Amazon Linux 2 Distro"
+  shell: "pip install --user --upgrade boto boto3 botocore"
+  become: yes
+  ignore_errors: yes
   when:
     - auto_install_latest or (install_python2_only and not install_python3_only)
