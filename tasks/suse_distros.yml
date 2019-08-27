@@ -7,9 +7,11 @@
 
 # Suse Distros
 
+# Suse Distros
+
 # Python3
 - name: "Install Python 3 | Red Hat 6 or CentOS 6 Distros"
-  yum:
+  zypper:
     name: "{{ packages }}"
     state: latest
   vars:
@@ -26,7 +28,7 @@
 
 # Python2
 - name: "Install Python 2 | Red Hat 6 or CentOS 6 Distros"
-  yum:
+  zypper:
     name: "{{ packages }}"
     state: latest
   vars:
